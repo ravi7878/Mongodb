@@ -62,7 +62,7 @@ route.post(
       };
       jwt.sign(payload, "my tocken", { expiresIn: 36000 }, (err, token) => {
         if (err) throw err;
-        res.send({ token });
+        res.json({ token });
       });
     } catch (err) {
       console.error(err.message);

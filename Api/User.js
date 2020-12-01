@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
 // @route  Post api/users
-//@desc    Register route
+//@desc    Register User
 //@access  Public
 route.post(
   "/",

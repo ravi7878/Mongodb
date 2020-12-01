@@ -7,7 +7,7 @@ connectDb();
 app.use(express.json({ extended: false }));
 app.use("/api/user", require("./Api/User"));
 app.use("/api/profile", require("./Api/Profile"));
-// app.use("/api/posts", require("./Api/Posts"));
+app.use("/api/post", require("./Api/Post"));
 app.use("/api/auth", require("./Api/Auth"));
 
 app.get("/", (req, res) => res.send("API Running"));

@@ -1,11 +1,17 @@
 import "./App.css";
 import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Landing } from "./Components/Layouts/Landing";
+import Landing from "./Components/Layouts/Landing";
 import Login from "./Components/Auth/Login";
 import Register from "./Components/Auth/Register";
 import Alert from "./Components/Layouts/Alert";
 import Dashboard from "./Components/Dashboard/Dashboard";
+import CreateProfile from "./Components/Profileforms/CreateProfile";
+import EditProfiles from "./Components/Profileforms/EditProfiles";
+import AddExeperience from "./Components/Profileforms/AddExeperience";
+import AddEducation from "./Components/Profileforms/AddEducation";
+
+import PrivateRoute from "./Components/Routing/PrivateRoute";
 //Redux
 import { Provider } from "react-redux";
 import Store from "./Redux/Store";
@@ -31,7 +37,27 @@ const App = () => {
             <Switch>
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute
+                exact
+                path="/create-profile"
+                component={CreateProfile}
+              />
+              <PrivateRoute
+                exact
+                path="/edit-profile"
+                component={EditProfiles}
+              />
+              <PrivateRoute
+                exact
+                path="/add-education"
+                component={AddEducation}
+              />
+              <PrivateRoute
+                exact
+                path="/add-experience"
+                component={AddExeperience}
+              />
             </Switch>
           </section>
         </Fragment>

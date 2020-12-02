@@ -4,7 +4,7 @@ const { check, validationResult } = require("express-validator");
 const auth = require("../middleware/auth");
 const Profile = require("../DB/Profile");
 const User = require("../DB/User");
-
+const Post = require("../DB/Post");
 // @route  GET api/profile/me
 //@desc    Get current user profile
 //@access  private
@@ -39,13 +39,11 @@ route.post(
   ],
   async (req, res) => {
     const errors = validationResult(req);
-
-    if (!errors.isEmpty) {
-      //   return res.status(400).json({ errors: errors.array() });
+    if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
     const {
-      user,
+      // user,
       company,
       website,
       location,
@@ -144,7 +142,8 @@ route.get("/user/:user_id", async (req, res) => {
 
 route.delete("/", auth, async (req, res) => {
   try {
-    //todo remove user posts
+    // remove user posts
+    await Post.deleteMany({ user: req.user.id });
     // remove profile
 
     await Profile.findOneAndRemove({ user: req.user.id });

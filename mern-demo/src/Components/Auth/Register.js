@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from "react";
-import axios from "axios";
 import { connect } from "react-redux";
 import { setAlert } from "../../Redux/Actions/Alert";
 import { register } from "../../Redux/Actions/Auth";

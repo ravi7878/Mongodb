@@ -4,6 +4,8 @@ import {
   UPDATE_PROFILE,
   CLEAR_PROFILE,
   DELETE_ACCOUNT,
+  GET_PROFILES,
+  GET_REPOS,
 } from "./types";
 import { setAlert } from "./Alert";
 import axios from "axios";
@@ -28,6 +30,66 @@ export const getCurrentProfile = () => async (dispatch) => {
     });
   }
 };
+//Get Current User Profile
+
+export const getUserRepos = (username) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/github/${username}`);
+    dispatch({
+      type: GET_REPOS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: err.response.statusText,
+        status: err.response.status,
+      },
+    });
+  }
+};
+//Get All Profiles
+export const getProfiles = () => async (dispatch) => {
+  try {
+    const res = await axios.get("/api/profile");
+    dispatch({ type: CLEAR_PROFILE });
+    dispatch({
+      type: GET_PROFILES,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: err.response.statusText,
+        status: err.response.status,
+      },
+    });
+  }
+};
+
+//Get Profile by id
+export const getProfileById = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/user/${userId}`);
+
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: err.response.statusText,
+        status: err.response.status,
+      },
+    });
+  }
+};
+
+//Get Github Repos
 
 // Add Profile detail
 
@@ -184,23 +246,25 @@ export const deleteEducation = (id) => async (dispatch) => {
 //Delete Account & profile
 
 export const deleteAccount = () => async (dispatch) => {
-  try {
-    const res = await axios.delete("/api/profile");
+  if (window.confirm("Are you sure? Your account deleted permenently")) {
+    try {
+      const res = await axios.delete("/api/profile");
 
-    dispatch({
-      type: CLEAR_PROFILE,
-    });
-    dispatch({
-      type: DELETE_ACCOUNT,
-    });
-    dispatch(setAlert("Your Account has been permenently deleted"));
-  } catch (err) {
-    dispatch({
-      type: PROFILE_ERROR,
-      payload: {
-        msg: err.response.statusText,
-        status: err.response.status,
-      },
-    });
+      dispatch({
+        type: CLEAR_PROFILE,
+      });
+      dispatch({
+        type: DELETE_ACCOUNT,
+      });
+      dispatch(setAlert("Your Account has been permenently deleted"));
+    } catch (err) {
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: {
+          msg: err.response.statusText,
+          status: err.response.status,
+        },
+      });
+    }
   }
 };

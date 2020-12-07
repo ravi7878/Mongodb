@@ -22,7 +22,8 @@ route.post(
       const user = await await User.findById(req.user.id).select("-password");
       const newPost = new Post({
         text: req.body.text,
-        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
         avatar: user.avatar,
         user: req.user.id,
       });
@@ -158,7 +159,8 @@ route.post(
 
       const newComment = {
         text: req.body.text,
-        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
         avatar: user.avatar,
         user: req.user.id,
       };
